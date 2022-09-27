@@ -85,10 +85,8 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    if board[0].count(None) + board[1].count(None) + board[2].count(None) == 0:
-        return None
-    #top row match
-    elif board[0][0] == board[0][1] == board[0][2] and board[0][2] != None:
+    #top row match and it's not a group of None's
+    if board[0][0] == board[0][1] == board[0][2] and board[0][2] != None:
         return board[0][0]
     #middle row match
     elif board[1][0] == board[1][1] == board[1][2] and board[1][2] != None:
@@ -118,13 +116,6 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    #initialize variable to count occupied spaces
-    spaces_used = 9
-    #loop thru the list and if a space isn't empty, increment counter by one
-    # for r in range(rows):
-    #     for c in range(cols):
-    #         if board[r][c] != None:
-    #             spaces_used += 1
     #if all spaces are used or there isn't a winner, return None
     if board[0].count(None) + board[1].count(None) + board[2].count(None) == 0 or winner(board) != None:
         return True
@@ -142,7 +133,6 @@ def score(board):
         return -1
     else:
         return 0
-
 
 def max_value(board):
     if terminal(board):
@@ -174,13 +164,13 @@ def minimax(board):
         #get set of possible moves
         moves = actions(board)
         
-        #if player == X, then use max_value
+        #if player == X, then use max_value function
         if player(board) == X:
             #best value is set really low to accept first candidate
             best_value = float('-inf')
             #best move is set to None
             best_move = None
-            #loop thru moves and if max_value is more than current best, update current best
+            #loop thru moves and if value obtained is more than current best, update current best
             #and update best move to that move
             for move in moves:
                 value = max_value(result(board, move))
@@ -195,7 +185,7 @@ def minimax(board):
             best_value = float('inf')
             #best move is set to None
             best_move = None
-            #loop thru moves and if min_value is less than current best, update current best
+            #loop thru moves and if value is less than current best, update current best
             #and update best move to that move
             for move in moves:
                 value = min_value(result(board, move))
@@ -204,16 +194,6 @@ def minimax(board):
                     best_value = value
             return best_move
             
-#you can do a hash set move: value
-#or you just can have a best move variable and update if value is better
-
-
-#THE PROBLEM IS: min_val and max_val only return the min or max val respectively
-#THEY DON'T RETURN THE MOVE THAT'S ASSOCIATED WITH THE OPTIMAL PATH
-
-#THE PLAN IS TO HAVE THE FUNCTIONS RETURN A TUPLE (V AND THE MOVE ASOCCIATED)
-
-
 
 #x win = 1
 #o win = -1
